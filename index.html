@@ -1,8 +1,9 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Timothy's Portfolio</title>
+  <title>Gospel Timothy's Portfolio</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome CDN -->
@@ -48,6 +49,16 @@
       --body-bg: linear-gradient(180deg, #FFFFFF 0%, #E0E7FF 100%);
     }
 
+    [data-theme="red-black"] {
+      --bg-primary: #1C2526;
+      --bg-secondary: #000000;
+      --text-primary: #FFFFFF;
+      --accent: #FF5252;
+      --card-bg: rgba(255, 255, 255, 0.1);
+      --card-border: rgba(255, 82, 82, 0.2);
+      --body-bg: linear-gradient(180deg, #D32F2F 0%, #000000 100%);
+    }
+
     body {
       background: var(--body-bg), url('/midterm/images/animation4.jpg') no-repeat center center fixed;
       background-size: cover;
@@ -70,6 +81,52 @@
       opacity: 0.3;
       z-index: -1;
     }
+
+    .lightning-frame {
+      position: relative;
+      display: inline-block;
+    }
+
+    .lightning-frame img {
+      position: relative;
+      z-index: 1;
+    }
+
+    .lightning-frame::before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      border: 2px solid transparent;
+      border-radius: 4px;
+      background: linear-gradient(
+        45deg,
+        transparent,
+        var(--accent),
+        transparent
+      );
+      background-size: 200% 200%;
+      animation: lightning 1.5s infinite alternate;
+      z-index: 0;
+      opacity: 0.7;
+    }
+
+    @keyframes lightning {
+      0% {
+        background-position: 0% 50%;
+        box-shadow: 0 0 5px var(--accent);
+      }
+      50% {
+        background-position: 100% 50%;
+        box-shadow: 0 0 10px var(--accent), 0 0 15px rgba(255, 255, 255, 0.5);
+      }
+      100% {
+        background-position: 200% 50%;
+        box-shadow: 0 0 5px var(--accent);
+      }
+    }
   </style>
 </head>
 <body>
@@ -85,6 +142,7 @@
     // Navbar Component
     const Navbar = () => {
       const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+      const [isMenuOpen, setIsMenuOpen] = useState(false);
 
       useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
@@ -92,7 +150,11 @@
       }, [theme]);
 
       const toggleTheme = () => {
-        setTheme(theme === 'dark' ? 'light' : 'dark');
+        setTheme(theme === 'dark' ? 'red-black' : 'dark');
+      };
+
+      const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
       };
 
       const handleSmoothScroll = (e, sectionId) => {
@@ -101,21 +163,24 @@
         if (section) {
           section.scrollIntoView({ behavior: 'smooth' });
         }
+        setIsMenuOpen(false);
       };
+
+      const navItems = ['Home', 'About Me', 'Services', 'Skills', 'Education', 'Hobby', 'Projects', 'Contact'];
 
       return (
         <header className="fixed top-0 w-full bg-[var(--bg-primary)]/90 shadow-lg z-50 px-4 py-4 md:px-12 flex justify-between items-center">
           <a href="#" className="text-2xl font-bold text-[var(--accent)] font-['Orbitron'] hover:text-[#FFD700]">
-            Timothy
+            Gospel Timothy
           </a>
-          <div className="flex items-center space-x-4 md:space-x-6">
-            <nav className="flex space-x-4 md:space-x-6">
-              {['Home', 'Services', 'Skills', 'Education', 'Hobby', 'Projects', 'Contact'].map((item) => (
+          <div className="flex items-center">
+            <nav className="hidden md:flex space-x-6">
+              {navItems.map((item) => (
                 <a
                   key={item}
-                  href={`#${item.toLowerCase()}`}
-                  onClick={(e) => handleSmoothScroll(e, `#${item.toLowerCase()}`)}
-                  className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300 text-sm md:text-base"
+                  href={`#${item.toLowerCase().replace(' ', '-')}`}
+                  onClick={(e) => handleSmoothScroll(e, `#${item.toLowerCase().replace(' ', '-')}`)}
+                  className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300 text-base"
                 >
                   {item}
                 </a>
@@ -123,15 +188,40 @@
             </nav>
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full bg-[var(--card-bg)] text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300"
+              className="p-2 rounded-full bg-[var(--card-bg)] text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300 ml-4"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? (
-                <i className="fa-solid fa-sun"></i>
+                <i className="fa-solid fa-fire"></i>
               ) : (
                 <i className="fa-solid fa-moon"></i>
               )}
             </button>
+            <button
+              onClick={toggleMenu}
+              className="md:hidden p-2 text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300"
+              aria-label="Toggle menu"
+            >
+              <i className={`fa-solid ${isMenuOpen ? 'fa-times' : 'fa-bars'} text-2xl`}></i>
+            </button>
+          </div>
+          <div
+            className={`md:hidden fixed top-16 left-0 w-full bg-[var(--bg-primary)]/95 transition-all duration-300 ease-in-out ${
+              isMenuOpen ? 'opacity-100 max-h-screen' : 'opacity-0 max-h-0'
+            } overflow-hidden`}
+          >
+            <nav className="flex flex-col items-center py-4">
+              {navItems.map((item) => (
+                <a
+                  key={item}
+                  href={`#${item.toLowerCase().replace(' ', '-')}`}
+                  onClick={(e) => handleSmoothScroll(e, `#${item.toLowerCase().replace(' ', '-')}`)}
+                  className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300 text-lg py-2"
+                >
+                  {item}
+                </a>
+              ))}
+            </nav>
           </div>
         </header>
       );
@@ -151,14 +241,14 @@
 
       return (
         <section id="home" ref={homeRef} className="min-h-screen flex flex-col justify-center items-center text-center px-4 md:px-12 bg-[var(--bg-primary)]/50">
-          <div className="mb-6">
+          <div className="mb-6 lightning-frame">
             <img
               src="/midterm/images/timo.jfif"
-              alt="Timothy's Profile Picture"
-              className="w-40 md:w-52 h-60 md:h-80 object-cover rounded-[50%/30%] border-4 border-[var(--accent)] shadow-lg"
+              alt="Gospel Timothy's Profile Picture"
+              className="w-[150px] h-[150px] md:w-[300px] md:h-[300px] object-cover rounded-none border-4 border-[var(--accent)] shadow-lg"
             />
           </div>
-          <h1 className="text-4xl md:text-6xl font-['Orbitron'] text-[var(--text-primary)] mb-4">Timothy</h1>
+          <h1 className="text-4xl md:text-6xl font-['Orbitron'] text-[var(--text-primary)] mb-4">Gospel Timothy Baracael</h1>
           <h3 className="text-xl md:text-2xl text-[var(--accent)] mb-6">IT Student</h3>
           <div className="flex flex-col md:flex-row gap-4">
             <a
@@ -173,6 +263,43 @@
             >
               Let's Collaborate
             </a>
+          </div>
+        </section>
+      );
+    };
+
+    // About Me Component
+    const AboutMe = () => {
+      const aboutRef = useRef(null);
+
+      useEffect(() => {
+        gsap.fromTo(
+          aboutRef.current,
+          { opacity: 0, y: 50 },
+          { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+        );
+      }, []);
+
+      return (
+        <section id="about-me" ref={aboutRef} className="py-16 px-4 md:px-12 text-center bg-[var(--bg-secondary)]/90">
+          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">About Me</h2>
+          <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
+            <div className="mb-6 md:mb-0 lightning-frame">
+              <img
+                src="/midterm/images/timothy.jfif"
+                alt="Gospel Timothy Baracael"
+                className="w-[450px] h-[550px] md:w-[900px] md:h-[240px] object-cover rounded-none border-4 border-[var(--accent)] shadow-lg"
+              />
+            </div>
+            <div className="text-left">
+              <h3 className="text-2xl text-[var(--accent)] mb-4">Gospel Timothy Baracael</h3>
+              <p className="text-[var(--text-primary)] text-sm md:text-base mb-4">
+                I'm a dedicated IT student at National University, passionate about blending technology and creativity. Drawing inspiration from the Golden State Warriors' teamwork, I tackle coding and design with enthusiasm and collaboration. My studies have honed my skills in web development, UI/UX design, and software testing, and I'm always eager to explore new tech.
+              </p>
+              <p className="text-[var(--text-primary)] text-sm md:text-base">
+                Outside of tech, I enjoy playing basketball and PC gaming, which spark my creativity and sharpen my problem-solving skills. Let's connect to create something innovative together!
+              </p>
+            </div>
           </div>
         </section>
       );
@@ -214,7 +341,7 @@
     const Skills = () => {
       const skills = [
         { name: 'C++', img: '/midterm/images/c++.png' },
-        { name: 'Java Script', img: '/midterm/images/java.png' },
+        { name: 'JavaScript', img: '/midterm/images/java.png' },
         { name: 'Photoshop', img: '/midterm/images/photoshop.jfif' },
         { name: 'WordPress', img: '/midterm/images/wp.png' },
         { name: 'Angular', img: '/midterm/images/angular.png' },
@@ -306,11 +433,13 @@
           title: 'Playing Basketball',
           duration: '2015 - Present',
           description: 'I enjoy playing basketball with friends, inspired by the Golden State Warriors’ teamwork and energy.',
+          img: '/midterm/images/basketball.jfif',
         },
         {
           title: 'PC Gaming',
           duration: '2018 - Present',
           description: 'I love playing PC games, especially strategy and sports titles, to unwind and have fun.',
+          img: '/midterm/images/pc.jfif',
         },
       ];
 
@@ -327,6 +456,13 @@
                 data-tilt-speed="400"
                 data-tilt-glare
               >
+                <div className="lightning-frame">
+                  <img
+                    src={hobby.img}
+                    alt={hobby.title}
+                    className="w-[300px] h-[300px] object-cover rounded-none border-2 border-[var(--accent)] mx-auto mb-4"
+                  />
+                </div>
                 <h4 className="text-xl text-[var(--accent)] mb-2">{hobby.title}</h4>
                 <p className="text-[var(--text-primary)] text-sm mb-2">{hobby.duration}</p>
                 <p className="text-[var(--text-primary)] text-sm">{hobby.description}</p>
@@ -477,6 +613,7 @@
         <div className="font-['Roboto'] text-[var(--text-primary)]">
           <Navbar />
           <Home />
+          <AboutMe />
           <Services />
           <Skills />
           <Education />
@@ -488,12 +625,9 @@
       );
     };
 
-    // Render the App with createRoot
+    // Render the App
     const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    );
+    root.render(<App />);
   </script>
-</body></html>
+</body>
+</html>

@@ -141,91 +141,107 @@
 
     // Navbar Component
     const Navbar = () => {
-      const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
-      const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-      useEffect(() => {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-      }, [theme]);
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
-      const toggleTheme = () => {
-        setTheme(theme === 'dark' ? 'red-black' : 'dark');
-      };
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'red-black' : 'dark');
+  };
 
-      const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-      };
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+   
+  <button
+  onClick={toggleMenu}
+  className={`md:hidden p-2 transition-all duration-300 rounded-lg ${
+    isMenuOpen ? 'bg-black' : ''
+  }`}
+  aria-label="Toggle menu"
+>
+  <div className={`burger-menu ${isMenuOpen ? 'active' : ''}`}>
+    <span className="bar"></span>
+    <span className="bar"></span>
+    <span className="bar"></span>
+  </div>
+</button>
 
-      const handleSmoothScroll = (e, sectionId) => {
-        e.preventDefault();
-        const section = document.querySelector(sectionId);
-        if (section) {
-          section.scrollIntoView({ behavior: 'smooth' });
-        }
-        setIsMenuOpen(false);
-      };
+  const handleSmoothScroll = (e, sectionId) => {
+    e.preventDefault();
+    const section = document.querySelector(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
 
-      const navItems = ['Home', 'About Me', 'Services', 'Skills', 'Education', 'Hobby', 'Projects', 'Contact'];
+  const navItems = ['Home', 'About Me', 'Services', 'Skills', 'Education', 'Hobby', 'Projects', 'Contact'];
 
-      return (
-        <header className="fixed top-0 w-full bg-[var(--bg-primary)]/90 shadow-lg z-50 px-4 py-4 md:px-12 flex justify-between items-center">
-          <a href="#" className="text-2xl font-bold text-[var(--accent)] font-['Orbitron'] hover:text-[#FFD700]">
-            Gospel Timothy
-          </a>
-          <div className="flex items-center">
-            <nav className="hidden md:flex space-x-6">
-              {navItems.map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase().replace(' ', '-')}`}
-                  onClick={(e) => handleSmoothScroll(e, `#${item.toLowerCase().replace(' ', '-')}`)}
-                  className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300 text-base"
-                >
-                  {item}
-                </a>
-              ))}
-            </nav>
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-full bg-[var(--card-bg)] text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300 ml-4"
-              aria-label="Toggle theme"
+  return (
+    <header className="fixed top-0 w-full bg-[var(--bg-primary)]/90 shadow-lg z-50 px-4 py-4 md:px-12 flex justify-between items-center">
+      <a href="#" className="text-2xl font-bold text-[var(--accent)] font-['Orbitron'] hover:text-[#FFD700]">
+        Gospel Timothy
+      </a>
+      <div className="flex items-center">
+        <nav className="hidden md:flex space-x-6">
+          {navItems.map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase().replace(' ', '-')}`}
+              onClick={(e) => handleSmoothScroll(e, `#${item.toLowerCase().replace(' ', '-')}`)}
+              className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300 text-base"
             >
-              {theme === 'dark' ? (
-                <i className="fa-solid fa-fire"></i>
-              ) : (
-                <i className="fa-solid fa-moon"></i>
-              )}
-            </button>
-            <button
-              onClick={toggleMenu}
-              className="md:hidden p-2 text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300"
-              aria-label="Toggle menu"
+              {item}
+            </a>
+          ))}
+        </nav>
+        <button
+          onClick={toggleTheme}
+          className="p-2 rounded-full bg-[var(--card-bg)] text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300 ml-4"
+          aria-label="Toggle theme"
+        >
+          {theme === 'dark' ? (
+            <i className="fa-solid fa-fire"></i>
+          ) : (
+            <i className="fa-solid fa-moon"></i>
+          )}
+        </button>
+        <button
+          onClick={toggleMenu}
+          className={`md:hidden p-2 text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300 rounded-lg ${
+            isMenuOpen ? 'bg-black text-white' : ''
+          }`}
+          aria-label="Toggle menu"
+        >
+          <i className={`fa-solid ${isMenuOpen ? 'fa-times' : 'fa-bars'} text-2xl`}></i>
+        </button>
+      </div>
+      <div
+        className={`md:hidden fixed top-16 left-0 w-full bg-[var(--bg-primary)]/95 transition-all duration-300 ease-in-out ${
+          isMenuOpen ? 'opacity-100 max-h-screen' : 'opacity-0 max-h-0'
+        } overflow-hidden`}
+      >
+        <nav className="flex flex-col items-center py-4">
+          {navItems.map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase().replace(' ', '-')}`}
+              onClick={(e) => handleSmoothScroll(e, `#${item.toLowerCase().replace(' ', '-')}`)}
+              className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300 text-lg py-2"
             >
-              <i className={`fa-solid ${isMenuOpen ? 'fa-times' : 'fa-bars'} text-2xl`}></i>
-            </button>
-          </div>
-          <div
-            className={`md:hidden fixed top-16 left-0 w-full bg-[var(--bg-primary)]/95 transition-all duration-300 ease-in-out ${
-              isMenuOpen ? 'opacity-100 max-h-screen' : 'opacity-0 max-h-0'
-            } overflow-hidden`}
-          >
-            <nav className="flex flex-col items-center py-4">
-              {navItems.map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase().replace(' ', '-')}`}
-                  onClick={(e) => handleSmoothScroll(e, `#${item.toLowerCase().replace(' ', '-')}`)}
-                  className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300 text-lg py-2"
-                >
-                  {item}
-                </a>
-              ))}
-            </nav>
-          </div>
-        </header>
-      );
-    };
+              {item}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+  );
+};
 
     // Home Component
     const Home = () => {

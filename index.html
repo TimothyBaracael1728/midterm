@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,6 +26,7 @@
   <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
   <!-- Particles.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js"></script>
   <style>
     :root {
       --bg-primary: #1D428A;
@@ -99,7 +98,9 @@
       const handleSmoothScroll = (e, sectionId) => {
         e.preventDefault();
         const section = document.querySelector(sectionId);
-        section.scrollIntoView({ behavior: 'smooth' });
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
+        }
       };
 
       return (
@@ -152,7 +153,7 @@
         <section id="home" ref={homeRef} className="min-h-screen flex flex-col justify-center items-center text-center px-4 md:px-12 bg-[var(--bg-primary)]/50">
           <div className="mb-6">
             <img
-              src="/midterm/image/img.jfif"
+              src="/midterm/image/timo.jfif"
               alt="Timothy's Profile Picture"
               className="w-40 md:w-52 h-60 md:h-80 object-cover rounded-[50%/30%] border-4 border-[var(--accent)] shadow-lg"
             />
@@ -212,14 +213,14 @@
     // Skills Component
     const Skills = () => {
       const skills = [
-        { name: 'Figma', img: '/midterm/image/img2.jfif' },
-        { name: 'Framer', img: '/midterm/image/img7.jfif' },
-        { name: 'Photoshop', img: '/midterm/image/img6.jfif' },
-        { name: 'WordPress', img: '/midterm/image/img9.jfif' },
-        { name: 'Angular', img: '/midterm/image/img3.jfif' },
-        { name: 'Webflow', img: '/midterm/image/img4.jfif' },
-        { name: 'Python', img: '/midterm/image/img5.jfif' },
-        { name: 'Sketch', img: '/midterm/image/img8.jfif' },
+        { name: 'C++', img: '/midterm/image/c++.PNG' },
+        { name: 'Java Script', img: '/midterm/image/java.PNG' },
+        { name: 'Photoshop', img: '/midterm/image/photoshop.jfif' },
+        { name: 'WordPress', img: '/midterm/image/wp.PNG' },
+        { name: 'Angular', img: '/midterm/image/angular.PNG' },
+        { name: 'Webflow', img: '/midterm/image/webflow.WEBP' },
+        { name: 'Python', img: '/midterm/image/python.PNG' },
+        { name: 'Sketch', img: '/midterm/image/sketch.PNG' },
       ];
 
       return (
@@ -248,7 +249,7 @@
     const Education = () => {
       const education = [
         {
-          logo: '/midterm/image/nu-logo.jfif',
+          logo: '/midterm/image/nu.PNG',
           degree: 'Bachelor of Science in Information Technology',
           school: 'National University',
           duration: '2023 - Present',
@@ -262,7 +263,7 @@
           description: 'Completed coursework in computer science basics, introductory programming, and digital design.',
         },
         {
-          logo: '/midterm/image/acs.jfif',
+          logo: '/midterm/image/ACS.PNG',
           degree: 'Graduated in Elementary',
           school: 'Alitagtag Central School',
           duration: '2010 - 2016',
@@ -277,7 +278,7 @@
             {education.map((edu, index) => (
               <div
                 key={index}
-                className="bg-[var(--card-bg)] p-6 rounded-lg=lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
+                className="bg-[var(--card-bg)] p-6 rounded-lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
                 data-tilt
                 data-tilt-max="15"
                 data-tilt-speed="400"
@@ -379,13 +380,14 @@
       const handleSubmit = (e) => {
         e.preventDefault();
         alert('Message sent! (This is a demo; no actual submission occurs.)');
+        // TODO: Integrate with a backend or form service (e.g., Formspree, Netlify Forms) for production
       };
 
       return (
         <section id="contact" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-primary)]/90">
           <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Contact</h2>
           <div className="max-w-lg mx-auto">
-            <div className="flex flex-col gap-4">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <input
                 type="text"
                 placeholder="Name"
@@ -404,26 +406,27 @@
                 className="p-3 rounded-lg bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--card-border)] focus:outline-none focus:border-[var(--accent)] h-32 resize-none"
               ></textarea>
               <button
-                onClick={handleSubmit}
+                type="submit"
                 className="px-6 py-2 bg-[var(--bg-primary)] text-[var(--text-primary)] rounded-lg hover:bg-[var(--accent)] hover:text-[var(--bg-primary)] transition-all duration-300 shadow-md"
               >
                 Send Message
               </button>
-            </div>
+            </form>
           </div>
           <div className="mt-8">
             <h3 className="text-2xl font-['Orbitron'] text-[var(--text-primary)] mb-4">Follow Me</h3>
             <div className="flex justify-center gap-6">
-              <a href="https://facebook.com/yourprofile" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
+              {/* TODO: Replace with your actual social media profile URLs */}
+              <a href="https://facebook.com" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
                 <i className="fa-brands fa-facebook text-2xl"></i>
               </a>
-              <a href="https://instagram.com/yourprofile" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
+              <a href="https://instagram.com" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
                 <i className="fa-brands fa-instagram text-2xl"></i>
               </a>
-              <a href="https://tiktok.com/yourprofile" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
+              <a href="https://tiktok.com" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
                 <i className="fa-brands fa-tiktok text-2xl"></i>
               </a>
-              <a href="https://twitter.com/yourprofile" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
+              <a href="https://twitter.com" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
                 <i className="fa-brands fa-x-twitter text-2xl"></i>
               </a>
             </div>
@@ -485,500 +488,12 @@
       );
     };
 
-    // Render the App
-    ReactDOM.render(<App />, document.getElementById('root'));
-  </script>
-</body>
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Timothy's Portfolio</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome CDN -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet" />
-  <!-- React CDNs -->
-  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
-  <!-- Babel for JSX -->
-  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.22.5/babel.min.js"></script>
-  <!-- GSAP CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
-  <!-- Vanilla Tilt CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
-  <!-- Particles.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-  <style>
-    :root {
-      --bg-primary: #1D428A;
-      --bg-secondary: #0A1A3D;
-      --text-primary: #FFFFFF;
-      --accent: #FFC107;
-      --card-bg: rgba(255, 255, 255, 0.1);
-      --card-border: rgba(255, 193, 7, 0.2);
-      --body-bg: linear-gradient(180deg, #1D428A 0%, #FFC107 100%);
-    }
-
-    [data-theme="light"] {
-      --bg-primary: #FFFFFF;
-      --bg-secondary: #F5F5F5;
-      --text-primary: #1D428A;
-      --accent: #FFC107;
-      --card-bg: rgba(29, 66, 138, 0.1);
-      --card-border: rgba(29, 66, 138, 0.2);
-      --body-bg: linear-gradient(180deg, #FFFFFF 0%, #E0E7FF 100%);
-    }
-
-    body {
-      background: var(--body-bg), url('/midterm/image/animation4.jpg') no-repeat center center fixed;
-      background-size: cover;
-      background-blend-mode: overlay;
-      color: var(--text-primary);
-      overflow-x: hidden;
-      position: relative;
-      font-family: 'Roboto', sans-serif;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect x="0" y="0" width="100%" height="100%" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/><circle cx="50%" cy="50%" r="50" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/><line x1="0" y1="50%" x2="100%" y2="50%" stroke="rgba(255,255,255,0.1)" stroke-width="2"/></svg>') no-repeat center center;
-      background-size: cover;
-      opacity: 0.3;
-      z-index: -1;
-    }
-  </style>
-</head>
-<body>
-  <!-- Particle Background -->
-  <div id="particles-js" class="absolute inset-0 z-[-1]"></div>
-
-  <!-- Root for React -->
-  <div id="root"></div>
-
-  <script type="text/babel">
-    const { useEffect, useRef, useState } = React;
-
-    // Navbar Component
-    const Navbar = () => {
-      const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
-
-      useEffect(() => {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-      }, [theme]);
-
-      const toggleTheme = () => {
-        setTheme(theme === 'dark' ? 'light' : 'dark');
-      };
-
-      const handleSmoothScroll = (e, sectionId) => {
-        e.preventDefault();
-        const section = document.querySelector(sectionId);
-        section.scrollIntoView({ behavior: 'smooth' });
-      };
-
-      return (
-        <header className="fixed top-0 w-full bg-[var(--bg-primary)]/90 shadow-lg z-50 px-4 py-4 md:px-12 flex justify-between items-center">
-          <a href="#" className="text-2xl font-bold text-[var(--accent)] font-['Orbitron'] hover:text-[#FFD700]">
-            Timothy
-          </a>
-          <div className="flex items-center space-x-4 md:space-x-6">
-            <nav className="flex space-x-4 md:space-x-6">
-              {['Home', 'Services', 'Skills', 'Education', 'Hobby', 'Projects', 'Contact'].map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  onClick={(e) => handleSmoothScroll(e, `#${item.toLowerCase()}`)}
-                  className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300 text-sm md:text-base"
-                >
-                  {item}
-                </a>
-              ))}
-            </nav>
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-full bg-[var(--card-bg)] text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300"
-              aria-label="Toggle theme"
-            >
-              {theme === 'dark' ? (
-                <i className="fa-solid fa-sun"></i>
-              ) : (
-                <i className="fa-solid fa-moon"></i>
-              )}
-            </button>
-          </div>
-        </header>
-      );
-    };
-
-    // Home Component
-    const Home = () => {
-      const homeRef = useRef(null);
-
-      useEffect(() => {
-        gsap.fromTo(
-          homeRef.current,
-          { opacity: 0, y: 50 },
-          { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
-        );
-      }, []);
-
-      return (
-        <section id="home" ref={homeRef} className="min-h-screen flex flex-col justify-center items-center text-center px-4 md:px-12 bg-[var(--bg-primary)]/50">
-          <div className="mb-6">
-            <img
-              src="/midterm/image/img.jfif"
-              alt="Timothy's Profile Picture"
-              className="w-40 md:w-52 h-60 md:h-80 object-cover rounded-[50%/30%] border-4 border-[var(--accent)] shadow-lg"
-            />
-          </div>
-          <h1 className="text-4xl md:text-6xl font-['Orbitron'] text-[var(--text-primary)] mb-4">Timothy</h1>
-          <h3 className="text-xl md:text-2xl text-[var(--accent)] mb-6">IT Student</h3>
-          <div className="flex flex-col md:flex-row gap-4">
-            <a
-              href="#projects"
-              className="px-6 py-2 bg-[var(--bg-primary)] text-[var(--text-primary)] rounded-lg hover:bg-[var(--accent)] hover:text-[var(--bg-primary)] transition-all duration-300 shadow-md"
-            >
-              View Projects
-            </a>
-            <a
-              href="#contact"
-              className="px-6 py-2 bg-[var(--bg-primary)] text-[var(--text-primary)] rounded-lg hover:bg-[var(--accent)] hover:text-[var(--bg-primary)] transition-all duration-300 shadow-md"
-            >
-              Let's Collaborate
-            </a>
-          </div>
-        </section>
-      );
-    };
-
-    // Services Component
-    const Services = () => {
-      const services = [
-        { title: 'Graphic Designer', description: 'Creating vibrant visuals with a focus on branding and illustration.' },
-        { title: 'Frontend Development', description: 'Building responsive websites with HTML, CSS, and JavaScript.' },
-        { title: 'UI/UX Design', description: 'Designing intuitive interfaces for seamless user experiences.' },
-        { title: 'Content Manager', description: 'Managing and creating engaging content for brands.' },
-        { title: 'Software Tester', description: 'Ensuring software quality through rigorous testing.' },
-      ];
-
-      return (
-        <section id="services" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-secondary)]/90">
-          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Services</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {services.map((service, index) => (
-              <div
-                key={index}
-                className="bg-[var(--card-bg)] p-6 rounded-lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
-                data-tilt
-                data-tilt-max="15"
-                data-tilt-speed="400"
-                data-tilt-glare
-              >
-                <h4 className="text-xl text-[var(--accent)] mb-2">{service.title}</h4>
-                <p className="text-[var(--text-primary)] text-sm">{service.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      );
-    };
-
-    // Skills Component
-    const Skills = () => {
-      const skills = [
-        { name: 'Figma', img: '/midterm/image/img2.jfif' },
-        { name: 'Framer', img: '/midterm/image/img7.jfif' },
-        { name: 'Photoshop', img: '/midterm/image/img6.jfif' },
-        { name: 'WordPress', img: '/midterm/image/img9.jfif' },
-        { name: 'Angular', img: '/midterm/image/img3.jfif' },
-        { name: 'Webflow', img: '/midterm/image/img4.jfif' },
-        { name: 'Python', img: '/midterm/image/img5.jfif' },
-        { name: 'Sketch', img: '/midterm/image/img8.jfif' },
-      ];
-
-      return (
-        <section id="skills" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-primary)]/90">
-          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Skills</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {skills.map((skill, index) => (
-              <div
-                key={index}
-                className="bg-[var(--card-bg)] p-4 rounded-lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
-                data-tilt
-                data-tilt-max="15"
-                data-tilt-speed="400"
-                data-tilt-glare
-              >
-                <img src={skill.img} alt={skill.name} className="w-12 h-12 object-contain mx-auto mb-2" />
-                <span className="text-[var(--text-primary)] text-sm">{skill.name}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-      );
-    };
-
-    // Education Component
-    const Education = () => {
-      const education = [
-        {
-          logo: '/midterm/image/nu-logo.jfif',
-          degree: 'Bachelor of Science in Information Technology',
-          school: 'National University',
-          duration: '2023 - Present',
-          description: 'Focused on web development, software engineering, and design.',
-        },
-        {
-          logo: '/midterm/image/AC.jfif',
-          degree: 'Senior High School Diploma (Humanities and Social Sciences)',
-          school: 'Alitagtag College',
-          duration: '2017 - 2023',
-          description: 'Completed coursework in computer science basics, introductory programming, and digital design.',
-        },
-        {
-          logo: '/midterm/image/acs.jfif',
-          degree: 'Graduated in Elementary',
-          school: 'Alitagtag Central School',
-          duration: '2010 - 2016',
-          description: 'Earned a certification in Sports.',
-        },
-      ];
-
-      return (
-        <section id="education" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-secondary)]/90">
-          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Education</h2>
-          <div className="flex flex-col gap-6 max-w-2xl mx-auto">
-            {education.map((edu, index) => (
-              <div
-                key={index}
-                className="bg-[var(--card-bg)] p-6 rounded-lg=lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
-                data-tilt
-                data-tilt-max="15"
-                data-tilt-speed="400"
-                data-tilt-glare
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <img src={edu.logo} alt={`${edu.school} Logo`} className="w-10 h-10 object-contain" />
-                  <div className="text-left">
-                    <h4 className="text-xl text-[var(--accent)]">{edu.degree}</h4>
-                    <p className="text-[var(--text-primary)] text-sm">{edu.school}, {edu.duration}</p>
-                  </div>
-                </div>
-                <p className="text-[var(--text-primary)] text-sm">{edu.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      );
-    };
-
-    // Hobby Component
-    const Hobby = () => {
-      const hobbies = [
-        {
-          title: 'Playing Basketball',
-          duration: '2015 - Present',
-          description: 'I enjoy playing basketball with friends, inspired by the Golden State Warriors’ teamwork and energy.',
-        },
-        {
-          title: 'PC Gaming',
-          duration: '2018 - Present',
-          description: 'I love playing PC games, especially strategy and sports titles, to unwind and have fun.',
-        },
-      ];
-
-      return (
-        <section id="hobby" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-primary)]/90">
-          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Hobby</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {hobbies.map((hobby, index) => (
-              <div
-                key={index}
-                className="bg-[var(--card-bg)] p-6 rounded-lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
-                data-tilt
-                data-tilt-max="15"
-                data-tilt-speed="400"
-                data-tilt-glare
-              >
-                <h4 className="text-xl text-[var(--accent)] mb-2">{hobby.title}</h4>
-                <p className="text-[var(--text-primary)] text-sm mb-2">{hobby.duration}</p>
-                <p className="text-[var(--text-primary)] text-sm">{hobby.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      );
-    };
-
-    // Projects Component
-    const Projects = () => {
-      const projects = [
-        {
-          title: 'Portfolio Website',
-          year: '2024',
-          description: 'Designed and developed a personal portfolio to showcase my skills and projects.',
-        },
-        {
-          title: 'Task Manager App',
-          year: '2024',
-          description: 'Created a task management application using HTML, CSS, and JavaScript.',
-        },
-      ];
-
-      return (
-        <section id="projects" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-secondary)]/90">
-          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Projects</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {projects.map((project, index) => (
-              <div
-                key={index}
-                className="bg-[var(--card-bg)] p-6 rounded-lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
-                data-tilt
-                data-tilt-max="15"
-                data-tilt-speed="400"
-                data-tilt-glare
-              >
-                <h4 className="text-xl text-[var(--accent)] mb-2">{project.title}</h4>
-                <p className="text-[var(--text-primary)] text-sm mb-2">{project.year}</p>
-                <p className="text-[var(--text-primary)] text-sm">{project.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      );
-    };
-
-    // Contact Component
-    const Contact = () => {
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        alert('Message sent! (This is a demo; no actual submission occurs.)');
-      };
-
-      return (
-        <section id="contact" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-primary)]/90">
-          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Contact</h2>
-          <div className="max-w-lg mx-auto">
-            <div className="flex flex-col gap-4">
-              <input
-                type="text"
-                placeholder="Name"
-                required
-                className="p-3 rounded-lg bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--card-border)] focus:outline-none focus:border-[var(--accent)]"
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                required
-                className="p-3 rounded-lg bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--card-border)] focus:outline-none focus:border-[var(--accent)]"
-              />
-              <textarea
-                placeholder="Message"
-                required
-                className="p-3 rounded-lg bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--card-border)] focus:outline-none focus:border-[var(--accent)] h-32 resize-none"
-              ></textarea>
-              <button
-                onClick={handleSubmit}
-                className="px-6 py-2 bg-[var(--bg-primary)] text-[var(--text-primary)] rounded-lg hover:bg-[var(--accent)] hover:text-[var(--bg-primary)] transition-all duration-300 shadow-md"
-              >
-                Send Message
-              </button>
-            </div>
-          </div>
-          <div className="mt-8">
-            <h3 className="text-2xl font-['Orbitron'] text-[var(--text-primary)] mb-4">Follow Me</h3>
-            <div className="flex justify-center gap-6">
-              <a href="https://facebook.com/yourprofile" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
-                <i className="fa-brands fa-facebook text-2xl"></i>
-              </a>
-              <a href="https://instagram.com/yourprofile" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
-                <i className="fa-brands fa-instagram text-2xl"></i>
-              </a>
-              <a href="https://tiktok.com/yourprofile" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
-                <i className="fa-brands fa-tiktok text-2xl"></i>
-              </a>
-              <a href="https://twitter.com/yourprofile" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
-                <i className="fa-brands fa-x-twitter text-2xl"></i>
-              </a>
-            </div>
-          </div>
-        </section>
-      );
-    };
-
-    // Footer Component
-    const Footer = () => (
-      <footer className="py-6 bg-[var(--bg-primary)]/90 text-center">
-        <p className="text-[var(--text-primary)] text-sm">© 2025 Gospel Timothy M. Baracael. All Rights Reserved.</p>
-      </footer>
+    // Render the App with createRoot
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
     );
-
-    // Main App Component
-    const App = () => {
-      useEffect(() => {
-        // Initialize Particles.js
-        particlesJS('particles-js', {
-          particles: {
-            number: { value: 80, density: { enable: true, value_area: 800 } },
-            color: { value: '#FFC107' },
-            shape: { type: 'circle' },
-            opacity: { value: 0.5, random: true },
-            size: { value: 3, random: true },
-            line_linked: { enable: true, distance: 150, color: '#FFC107', opacity: 0.4, width: 1 },
-            move: { enable: true, speed: 2, direction: 'none', random: true, straight: false, out_mode: 'out' },
-          },
-          interactivity: {
-            detect_on: 'canvas',
-            events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
-            modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } },
-          },
-          retina_detect: true,
-        });
-
-        // Initialize Vanilla Tilt on cards
-        VanillaTilt.init(document.querySelectorAll('[data-tilt]'), {
-          max: 15,
-          speed: 400,
-          glare: true,
-          'max-glare': 0.5,
-        });
-      }, []);
-
-      return (
-        <div className="font-['Roboto'] text-[var(--text-primary)]">
-          <Navbar />
-          <Home />
-          <Services />
-          <Skills />
-          <Education />
-          <Hobby />
-          <Projects />
-          <Contact />
-          <Footer />
-        </div>
-      );
-    };
-
-    // Render the App
-    ReactDOM.render(<App />, document.getElementById('root'));
   </script>
-</body>
->>>>>>> d0ce23825b5f2d7945321af673b6a1e729130fe0
-</html>
+</body></html>

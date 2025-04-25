@@ -15,43 +15,58 @@
     referrerpolicy="no-referrer"
   />
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <!-- AOS CDN -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet" />
   <!-- React CDNs -->
   <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
   <!-- Babel for JSX -->
   <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.22.5/babel.min.js"></script>
-  <!-- Smooth Scroll Polyfill -->
+  <!-- GSAP CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <!-- Vanilla Tilt CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
+  <!-- Particles.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js"></script>
   <style>
     :root {
-      --bg-primary: #1D3557;
+      --bg-primary: #1D428A;
       --bg-secondary: #0A1A3D;
-      --text-primary: #F1F1F1;
-      --accent: #F4A261;
-      --accent-hover: #E76F51;
+      --text-primary: #FFFFFF;
+      --accent: #FFC107;
       --card-bg: rgba(255, 255, 255, 0.1);
-      --card-border: rgba(244, 162, 97, 0.3);
-      --shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      --shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.3);
-      --body-bg: linear-gradient(135deg, #1D3557 0%, #0A1A3D 100%);
+      --card-border: rgba(255, 193, 7, 0.2);
+      --body-bg: linear-gradient(180deg, #1D428A 0%, #FFC107 100%);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+    [data-theme="light"] {
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F5F5F5;
+      --text-primary: #1D428A;
+      --accent: #FFC107;
+      --card-bg: rgba(29, 66, 138, 0.1);
+      --card-border: rgba(29, 66, 138, 0.2);
+      --body-bg: linear-gradient(180deg, #FFFFFF 0%, #E0E7FF 100%);
+    }
+
+    [data-theme="red-black"] {
+      --bg-primary: #1C2526;
+      --bg-secondary: #000000;
+      --text-primary: #FFFFFF;
+      --accent: #FF5252;
+      --card-bg: rgba(255, 255, 255, 0.1);
+      --card-border: rgba(255, 82, 82, 0.2);
+      --body-bg: linear-gradient(180deg, #D32F2F 0%, #000000 100%);
     }
 
     body {
-      background: var(--body-bg);
+      background: var(--body-bg), url('/midterm/images/animation4.jpg') no-repeat center center fixed;
+      background-size: cover;
+      background-blend-mode: overlay;
       color: var(--text-primary);
       overflow-x: hidden;
       position: relative;
+      font-family: 'Roboto', sans-serif;
     }
 
     body::before {
@@ -61,149 +76,82 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 15px 15px, rgba(244, 162, 97, 0.1) 2px, transparent 4px);
-      background-size: 25px 25px;
-      opacity: 0.15;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect x="0" y="0" width="100%" height="100%" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/><circle cx="50%" cy="50%" r="50" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/><line x1="0" y1="50%" x2="100%" y2="50%" stroke="rgba(255,255,255,0.1)" stroke-width="2"/></svg>') no-repeat center center;
+      background-size: cover;
+      opacity: 0.3;
       z-index: -1;
     }
 
-    header {
-      background: var(--bg-primary);
-      backdrop-filter: blur(5px);
-      box-shadow: var(--shadow);
-    }
-
-    .navbar a {
-      font-weight: 600;
-      transition: color 0.3s ease;
-    }
-
-    .navbar a:hover {
-      color: var(--accent-hover);
-    }
-
-    .section-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 20px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      backdrop-filter: blur(5px);
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .btn {
-      padding: 12px 24px;
-      background: var(--accent);
-      color: var(--bg-primary);
-      border-radius: 9999px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: background 0.3s ease, transform 0.3s ease;
-      box-shadow: var(--shadow);
-    }
-
-    .btn:hover {
-      background: var(--accent-hover);
-      transform: translateY(-2px);
-    }
-
-    .image-frame {
+    .lightning-frame {
       position: relative;
       display: inline-block;
-      overflow: hidden;
-      border-radius: 50%;
-      border: 3px solid var(--accent);
-      transition: transform 0.3s ease;
     }
 
-    .image-frame:hover {
-      transform: scale(1.05);
+    .lightning-frame img {
+      position: relative;
+      z-index: 1;
     }
 
-    .image-frame img {
-      display: block;
+    .lightning-frame::before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      border: 2px solid transparent;
+      border-radius: 4px;
+      background: linear-gradient(
+        45deg,
+        transparent,
+        var(--accent),
+        transparent
+      );
+      background-size: 200% 200%;
+      animation: lightning 1.5s infinite alternate;
+      z-index: 0;
+      opacity: 0.7;
     }
 
-    .form-container input,
-    .form-container textarea {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 12px;
-      color: var(--text-primary);
-      transition: border 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .form-container input:focus,
-    .form-container textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 8px rgba(244, 162, 97, 0.3);
-      outline: none;
-    }
-
-    .social-icon {
-      transition: transform 0.3s ease, color 0.3s ease;
-    }
-
-    .social-icon:hover {
-      transform: scale(1.2);
-      color: var(--accent-hover);
-    }
-
-    @media (max-width: 768px) {
-      body::before {
-        background-size: 20px 20px;
-        opacity: 0.1;
+    @keyframes lightning {
+      0% {
+        background-position: 0% 50%;
+        box-shadow: 0 0 5px var(--accent);
       }
-
-      .section-title {
-        font-size: 1.8rem;
+      50% {
+        background-position: 100% 50%;
+        box-shadow: 0 0 10px var(--accent), 0 0 15px rgba(255, 255, 255, 0.5);
       }
-
-      .card {
-        padding: 16px;
-      }
-
-      .image-frame img {
-        max-width: 100px;
-        max-height: 100px;
-      }
-
-      .form-container {
-        padding: 16px;
-      }
-
-      .btn {
-        padding: 10px 20px;
+      100% {
+        background-position: 200% 50%;
+        box-shadow: 0 0 5px var(--accent);
       }
     }
   </style>
 </head>
 <body>
+  <!-- Particle Background -->
+  <div id="particles-js" class="absolute inset-0 z-[-1]"></div>
+
   <!-- Root for React -->
   <div id="root"></div>
 
   <script type="text/babel">
-    const { useEffect, useState } = React;
+    const { useEffect, useRef, useState } = React;
 
     // Navbar Component
     const Navbar = () => {
+      const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
       const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+      useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+      }, [theme]);
+
+      const toggleTheme = () => {
+        setTheme(theme === 'dark' ? 'red-black' : 'dark');
+      };
 
       const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -221,12 +169,12 @@
       const navItems = ['Home', 'About Me', 'Services', 'Skills', 'Education', 'Hobby', 'Projects', 'Contact'];
 
       return (
-        <header className="fixed top-0 w-full z-50 px-4 py-4 md:px-12 flex justify-between items-center">
-          <a href="#" className="text-2xl font-bold text-[var(--accent)] hover:text-[var(--accent-hover)] transition-all duration-300">
+        <header className="fixed top-0 w-full bg-[var(--bg-primary)]/90 shadow-lg z-50 px-4 py-4 md:px-12 flex justify-between items-center">
+          <a href="#" className="text-2xl font-bold text-[var(--accent)] font-['Orbitron'] hover:text-[#FFD700]">
             Gospel Timothy
           </a>
           <div className="flex items-center">
-            <nav className="hidden md:flex space-x-6 navbar">
+            <nav className="hidden md:flex space-x-6">
               {navItems.map((item) => (
                 <a
                   key={item}
@@ -238,6 +186,17 @@
                 </a>
               ))}
             </nav>
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full bg-[var(--card-bg)] text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300 ml-4"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? (
+                <i className="fa-solid fa-fire"></i>
+              ) : (
+                <i className="fa-solid fa-moon"></i>
+              )}
+            </button>
             <button
               onClick={toggleMenu}
               className="md:hidden p-2 text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300"
@@ -251,7 +210,7 @@
               isMenuOpen ? 'opacity-100 max-h-screen' : 'opacity-0 max-h-0'
             } overflow-hidden`}
           >
-            <nav className="flex flex-col items-center py-4 navbar">
+            <nav className="flex flex-col items-center py-4">
               {navItems.map((item) => (
                 <a
                   key={item}
@@ -270,29 +229,40 @@
 
     // Home Component
     const Home = () => {
+      const homeRef = useRef(null);
+
       useEffect(() => {
-        AOS.init({ duration: 1000, once: true });
+        gsap.fromTo(
+          homeRef.current,
+          { opacity: 0, y: 50 },
+          { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+        );
       }, []);
 
       return (
-        <section id="home" className="min-h-screen flex flex-col justify-center items-center text-center px-4 md:px-12">
-          <div className="image-frame mb-6" data-aos="fade-up">
+        <section id="home" ref={homeRef} className="min-h-screen flex flex-col justify-center items-center text-center px-4 md:px-12 bg-[var(--bg-primary)]/50">
+          <div className="mb-6 lightning-frame">
             <img
               src="/midterm/images/timo.jfif"
               alt="Gospel Timothy's Profile Picture"
-              className="w-[100px] h-[100px] md:w-[350px] md:h-[350px] object-cover"
-              loading="lazy"
+              className="w-[150px] h-[150px] md:w-[300px] md:h-[300px] object-cover rounded-none border-4 border-[var(--accent)] shadow-lg"
             />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-4" data-aos="fade-up" data-aos-delay="100">
-            Gospel Timothy Baracael
-          </h1>
-          <h3 className="text-xl md:text-2xl text-[var(--accent)] mb-6" data-aos="fade-up" data-aos-delay="200">
-            IT Student & Creative Developer
-          </h3>
-          <div className="flex flex-col md:flex-row gap-4" data-aos="fade-up" data-aos-delay="300">
-            <a href="#projects" className="btn">View Projects</a>
-            <a href="#contact" className="btn">Let's Collaborate</a>
+          <h1 className="text-4xl md:text-6xl font-['Orbitron'] text-[var(--text-primary)] mb-4">Gospel Timothy Baracael</h1>
+          <h3 className="text-xl md:text-2xl text-[var(--accent)] mb-6">IT Student & Creative Developer</h3>
+          <div className="flex flex-col md:flex-row gap-4">
+            <a
+              href="#projects"
+              className="px-6 py-2 bg-[var(--bg-primary)] text-[var(--text-primary)] rounded-lg hover:bg-[var(--accent)] hover:text-[var(--bg-primary)] transition-all duration-300 shadow-md"
+            >
+              View Projects
+            </a>
+            <a
+              href="#contact"
+              className="px-6 py-2 bg-[var(--bg-primary)] text-[var(--text-primary)] rounded-lg hover:bg-[var(--accent)] hover:text-[var(--bg-primary)] transition-all duration-300 shadow-md"
+            >
+              Let's Collaborate
+            </a>
           </div>
         </section>
       );
@@ -300,27 +270,34 @@
 
     // About Me Component
     const AboutMe = () => {
+      const aboutRef = useRef(null);
+
+      useEffect(() => {
+        gsap.fromTo(
+          aboutRef.current,
+          { opacity: 0, y: 50 },
+          { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+        );
+      }, []);
+
       return (
-        <section id="about-me" className="py-16 px-4 md:px-12 text-center">
-          <h2 className="section-title" data-aos="fade-up">
-            <i className="fa-solid fa-user text-[var(--accent)]"></i> About Me
-          </h2>
-          <div className="max-w-4xl mx-auto card flex flex-col md:flex-row items-center gap-8" data-aos="fade-up" data-aos-delay="100">
-            <div className="image-frame mb-6 md:mb-0">
+        <section id="about-me" ref={aboutRef} className="py-16 px-4 md:px-12 text-center bg-[var(--bg-secondary)]/90">
+          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">About Me</h2>
+          <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
+            <div className="mb-6 md:mb-0 lightning-frame">
               <img
                 src="/midterm/images/timothy.jfif"
                 alt="Gospel Timothy Baracael"
-                className="w-[320px] h-[420px] md:w-[960px] md:h-[460px] object-cover"
-                loading="lazy"
+                className="w-[450px] h-[550px] md:w-[900px] md:h-[240px] object-cover rounded-none border-4 border-[var(--accent)] shadow-lg"
               />
             </div>
             <div className="text-left">
-              <h3 className="text-2xl text-[var(--accent)] mb-4 font-semibold">Gospel Timothy Baracael</h3>
-              <p className="text-[var(--text-primary)] text-sm md:text-base mb-4 leading-relaxed">
-                I'm a passionate IT student at National University, driven by a love for technology and creativity. Inspired by the Golden State Warriors' teamwork, I approach coding and design with enthusiasm and collaboration. My expertise includes web development, UI/UX design, and software testing, and I'm always eager to learn new technologies.
+              <h3 className="text-2xl text-[var(--accent)] mb-4">Gospel Timothy Baracael</h3>
+              <p className="text-[var(--text-primary)] text-sm md:text-base mb-4">
+                I'm a dedicated IT student at National University, passionate about blending technology and creativity. Drawing inspiration from the Golden State Warriors' teamwork, I tackle coding and design with enthusiasm and collaboration. My studies have honed my skills in web development, UI/UX design, and software testing, and I'm always eager to explore new tech.
               </p>
-              <p className="text-[var(--text-primary)] text-sm md:text-base leading-relaxed">
-                When I'm not coding, you can find me playing basketball or diving into PC gaming, which fuel my creativity and problem-solving skills. Let's connect to build something amazing together!
+              <p className="text-[var(--text-primary)] text-sm md:text-base">
+                Outside of tech, I enjoy playing basketball and PC gaming, which spark my creativity and sharpen my problem-solving skills. Let's connect to create something innovative together!
               </p>
             </div>
           </div>
@@ -331,24 +308,28 @@
     // Services Component
     const Services = () => {
       const services = [
-        { title: 'Graphic Design', description: 'Crafting vibrant visuals for branding and illustration.', icon: 'fa-paint-brush' },
-        { title: 'Frontend Development', description: 'Building responsive websites with HTML, CSS, and JavaScript.', icon: 'fa-code' },
-        { title: 'UI/UX Design', description: 'Designing intuitive interfaces for seamless user experiences.', icon: 'fa-desktop' },
-        { title: 'Content Management', description: 'Creating and managing engaging content for brands.', icon: 'fa-file-alt' },
-        { title: 'Software Testing', description: 'Ensuring software quality through rigorous testing.', icon: 'fa-bug' },
+        { title: 'Graphic Designer', description: 'Creating vibrant visuals with a focus on branding and illustration.' },
+        { title: 'Frontend Development', description: 'Building responsive websites with HTML, CSS, and JavaScript.' },
+        { title: 'UI/UX Design', description: 'Designing intuitive interfaces for seamless user experiences.' },
+        { title: 'Content Manager', description: 'Managing and creating engaging content for brands.' },
+        { title: 'Software Tester', description: 'Ensuring software quality through rigorous testing.' },
       ];
 
       return (
-        <section id="services" className="py-16 px-4 md:px-12 text-center">
-          <h2 className="section-title" data-aos="fade-up">
-            <i className="fa-solid fa-briefcase text-[var(--accent)]"></i> Services
-          </h2>
+        <section id="services" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-secondary)]/90">
+          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {services.map((service, index) => (
-              <div key={index} className="card" data-aos="fade-up" data-aos-delay={`${100 * (index + 1)}`}>
-                <i className={`fa-solid ${service.icon} text-[var(--accent)] text-2xl mb-3`}></i>
-                <h4 className="text-lg text-[var(--accent)] mb-2 font-semibold">{service.title}</h4>
-                <p className="text-[var(--text-primary)] text-sm leading-relaxed">{service.description}</p>
+              <div
+                key={index}
+                className="bg-[var(--card-bg)] p-6 rounded-lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
+                data-tilt
+                data-tilt-max="15"
+                data-tilt-speed="400"
+                data-tilt-glare
+              >
+                <h4 className="text-xl text-[var(--accent)] mb-2">{service.title}</h4>
+                <p className="text-[var(--text-primary)] text-sm">{service.description}</p>
               </div>
             ))}
           </div>
@@ -370,15 +351,20 @@
       ];
 
       return (
-        <section id="skills" className="py-16 px-4 md:px-12 text-center">
-          <h2 className="section-title" data-aos="fade-up">
-            <i className="fa-solid fa-tools text-[var(--accent)]"></i> Skills
-          </h2>
+        <section id="skills" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-primary)]/90">
+          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Skills</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {skills.map((skill, index) => (
-              <div key={index} className="card flex flex-col items-center" data-aos="fade-up" data-aos-delay={`${100 * (index + 1)}`}>
-                <img src={skill.img} alt={skill.name} className="w-12 h-12 object-contain mb-2" loading="lazy" />
-                <span className="text-[var(--text-primary)] text-sm font-medium">{skill.name}</span>
+              <div
+                key={index}
+                className="bg-[var(--card-bg)] p-4 rounded-lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
+                data-tilt
+                data-tilt-max="15"
+                data-tilt-speed="400"
+                data-tilt-glare
+              >
+                <img src={skill.img} alt={skill.name} className="w-12 h-12 object-contain mx-auto mb-2" />
+                <span className="text-[var(--text-primary)] text-sm">{skill.name}</span>
               </div>
             ))}
           </div>
@@ -413,21 +399,26 @@
       ];
 
       return (
-        <section id="education" className="py-16 px-4 md:px-12 text-center">
-          <h2 className="section-title" data-aos="fade-up">
-            <i className="fa-solid fa-graduation-cap text-[var(--accent)]"></i> Education
-          </h2>
+        <section id="education" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-secondary)]/90">
+          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Education</h2>
           <div className="flex flex-col gap-6 max-w-2xl mx-auto">
             {education.map((edu, index) => (
-              <div key={index} className="card" data-aos="fade-up" data-aos-delay={`${100 * (index + 1)}`}>
+              <div
+                key={index}
+                className="bg-[var(--card-bg)] p-6 rounded-lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
+                data-tilt
+                data-tilt-max="15"
+                data-tilt-speed="400"
+                data-tilt-glare
+              >
                 <div className="flex items-center gap-4 mb-4">
-                  <img src={edu.logo} alt={`${edu.school} Logo`} className="w-10 h-10 object-contain" loading="lazy" />
+                  <img src={edu.logo} alt={`${edu.school} Logo`} className="w-10 h-10 object-contain" />
                   <div className="text-left">
-                    <h4 className="text-lg text-[var(--accent)] font-semibold">{edu.degree}</h4>
+                    <h4 className="text-xl text-[var(--accent)]">{edu.degree}</h4>
                     <p className="text-[var(--text-primary)] text-sm">{edu.school}, {edu.duration}</p>
                   </div>
                 </div>
-                <p className="text-[var(--text-primary)] text-sm leading-relaxed">{edu.description}</p>
+                <p className="text-[var(--text-primary)] text-sm">{edu.description}</p>
               </div>
             ))}
           </div>
@@ -453,22 +444,28 @@
       ];
 
       return (
-        <section id="hobby" className="py-16 px-4 md:px-12 text-center">
-          <h2 className="section-title" data-aos="fade-up">
-            <i className="fa-solid fa-basketball text-[var(--accent)]"></i> Hobbies
-          </h2>
+        <section id="hobby" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-primary)]/90">
+          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Hobby</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {hobbies.map((hobby, index) => (
-              <div key={index} className="card" data-aos="fade-up" data-aos-delay={`${100 * (index + 1)}`}>
-                <img
-                  src={hobby.img}
-                  alt={hobby.title}
-                  className="w-60 h-60 object-cover rounded-full mx-auto mb-4 border-2 border-[var(--accent)]"
-                  loading="lazy"
-                />
-                <h4 className="text-lg text-[var(--accent)] mb-2 font-semibold">{hobby.title}</h4>
+              <div
+                key={index}
+                className="bg-[var(--card-bg)] p-6 rounded-lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
+                data-tilt
+                data-tilt-max="15"
+                data-tilt-speed="400"
+                data-tilt-glare
+              >
+                <div className="lightning-frame">
+                  <img
+                    src={hobby.img}
+                    alt={hobby.title}
+                    className="w-[300px] h-[300px] object-cover rounded-none border-2 border-[var(--accent)] mx-auto mb-4"
+                  />
+                </div>
+                <h4 className="text-xl text-[var(--accent)] mb-2">{hobby.title}</h4>
                 <p className="text-[var(--text-primary)] text-sm mb-2">{hobby.duration}</p>
-                <p className="text-[var(--text-primary)] text-sm leading-relaxed">{hobby.description}</p>
+                <p className="text-[var(--text-primary)] text-sm">{hobby.description}</p>
               </div>
             ))}
           </div>
@@ -492,16 +489,21 @@
       ];
 
       return (
-        <section id="projects" className="py-16 px-4 md:px-12 text-center">
-          <h2 className="section-title" data-aos="fade-up">
-            <i className="fa-solid fa-laptop-code text-[var(--accent)]"></i> Projects
-          </h2>
+        <section id="projects" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-secondary)]/90">
+          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {projects.map((project, index) => (
-              <div key={index} className="card" data-aos="fade-up" data-aos-delay={`${100 * (index + 1)}`}>
-                <h4 className="text-lg text-[var(--accent)] mb-2 font-semibold">{project.title}</h4>
+              <div
+                key={index}
+                className="bg-[var(--card-bg)] p-6 rounded-lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
+                data-tilt
+                data-tilt-max="15"
+                data-tilt-speed="400"
+                data-tilt-glare
+              >
+                <h4 className="text-xl text-[var(--accent)] mb-2">{project.title}</h4>
                 <p className="text-[var(--text-primary)] text-sm mb-2">{project.year}</p>
-                <p className="text-[var(--text-primary)] text-sm leading-relaxed">{project.description}</p>
+                <p className="text-[var(--text-primary)] text-sm">{project.description}</p>
               </div>
             ))}
           </div>
@@ -514,52 +516,53 @@
       const handleSubmit = (e) => {
         e.preventDefault();
         alert('Message sent! (This is a demo; no actual submission occurs.)');
-        // For production, integrate with Formspree: <form action="https://formspree.io/f/your-form-id" method="POST">
+        // TODO: Integrate with a backend or form service (e.g., Formspree, Netlify Forms) for production
       };
 
       return (
-        <section id="contact" className="py-16 px-4 md:px-12 text-center">
-          <h2 className="section-title" data-aos="fade-up">
-            <i className="fa-solid fa-envelope text-[var(--accent)]"></i> Contact Me
-          </h2>
-          <div className="max-w-lg mx-auto card form-container" data-aos="fade-up" data-aos-delay="100">
+        <section id="contact" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-primary)]/90">
+          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Contact Me</h2>
+          <div className="max-w-lg mx-auto">
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <input
                 type="text"
                 placeholder="Name"
                 required
-                className="text-[var(--text-primary)]"
-                aria-label="Name"
+                className="p-3 rounded-lg bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--card-border)] focus:outline-none focus:border-[var(--accent)]"
               />
               <input
                 type="email"
                 placeholder="Email"
                 required
-                className="text-[var(--text-primary)]"
-                aria-label="Email"
+                className="p-3 rounded-lg bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--card-border)] focus:outline-none focus:border-[var(--accent)]"
               />
               <textarea
                 placeholder="Message"
                 required
-                className="text-[var(--text-primary)] h-32 resize-none"
-                aria-label="Message"
+                className="p-3 rounded-lg bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--card-border)] focus:outline-none focus:border-[var(--accent)] h-32 resize-none"
               ></textarea>
-              <button type="submit" className="btn">Send Message</button>
+              <button
+                type="submit"
+                className="px-6 py-2 bg-[var(--bg-primary)] text-[var(--text-primary)] rounded-lg hover:bg-[var(--accent)] hover:text-[var(--bg-primary)] transition-all duration-300 shadow-md"
+              >
+                Send Message
+              </button>
             </form>
           </div>
-          <div className="mt-8" data-aos="fade-up" data-aos-delay="200">
-            <h3 className="text-xl font-semibold text-[var(--text-primary)] mb-4">Follow Me</h3>
+          <div className="mt-8">
+            <h3 className="text-2xl font-['Orbitron'] text-[var(--text-primary)] mb-4">Follow Me</h3>
             <div className="flex justify-center gap-6">
-              <a href="https://facebook.com" className="social-icon text-[var(--text-primary)]" aria-label="Facebook">
+              {/* TODO: Replace with your actual social media profile URLs */}
+              <a href="https://facebook.com" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
                 <i className="fa-brands fa-facebook text-2xl"></i>
               </a>
-              <a href="https://instagram.com" className="social-icon text-[var(--text-primary)]" aria-label="Instagram">
+              <a href="https://instagram.com" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
                 <i className="fa-brands fa-instagram text-2xl"></i>
               </a>
-              <a href="https://tiktok.com" className="social-icon text-[var(--text-primary)]" aria-label="TikTok">
+              <a href="https://tiktok.com" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
                 <i className="fa-brands fa-tiktok text-2xl"></i>
               </a>
-              <a href="https://twitter.com" className="social-icon text-[var(--text-primary)]" aria-label="Twitter">
+              <a href="https://twitter.com" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
                 <i className="fa-brands fa-x-twitter text-2xl"></i>
               </a>
             </div>
@@ -570,15 +573,44 @@
 
     // Footer Component
     const Footer = () => (
-      <footer className="py-6 bg-[var(--bg-primary)] text-center">
+      <footer className="py-6 bg-[var(--bg-primary)]/90 text-center">
         <p className="text-[var(--text-primary)] text-sm">© 2025 Gospel Timothy M. Baracael. All Rights Reserved.</p>
       </footer>
     );
 
     // Main App Component
     const App = () => {
+      useEffect(() => {
+        // Initialize Particles.js
+        particlesJS('particles-js', {
+          particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: '#FFC107' },
+            shape: { type: 'circle' },
+            opacity: { value: 0.5, random: true },
+            size: { value: 3, random: true },
+            line_linked: { enable: true, distance: 150, color: '#FFC107', opacity: 0.4, width: 1 },
+            move: { enable: true, speed: 2, direction: 'none', random: true, straight: false, out_mode: 'out' },
+          },
+          interactivity: {
+            detect_on: 'canvas',
+            events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+            modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } },
+          },
+          retina_detect: true,
+        });
+
+        // Initialize Vanilla Tilt on cards
+        VanillaTilt.init(document.querySelectorAll('[data-tilt]'), {
+          max: 15,
+          speed: 400,
+          glare: true,
+          'max-glare': 0.5,
+        });
+      }, []);
+
       return (
-        <div className="text-[var(--text-primary)]">
+        <div className="font-['Roboto'] text-[var(--text-primary)]">
           <Navbar />
           <Home />
           <AboutMe />

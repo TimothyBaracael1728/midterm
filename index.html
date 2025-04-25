@@ -27,6 +27,50 @@
   <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
   <!-- Particles.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #1D428A;
+      --bg-secondary: #0A1A3D;
+      --text-primary: #FFFFFF;
+      --accent: #FFC107;
+      --card-bg: rgba(255, 255, 255, 0.1);
+      --card-border: rgba(255, 193, 7, 0.2);
+      --body-bg: linear-gradient(180deg, #1D428A 0%, #FFC107 100%);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F5F5F5;
+      --text-primary: #1D428A;
+      --accent: #FFC107;
+      --card-bg: rgba(29, 66, 138, 0.1);
+      --card-border: rgba(29, 66, 138, 0.2);
+      --body-bg: linear-gradient(180deg, #FFFFFF 0%, #E0E7FF 100%);
+    }
+
+    body {
+      background: var(--body-bg), url('/midterm/image/animation4.jpg') no-repeat center center fixed;
+      background-size: cover;
+      background-blend-mode: overlay;
+      color: var(--text-primary);
+      overflow-x: hidden;
+      position: relative;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect x="0" y="0" width="100%" height="100%" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/><circle cx="50%" cy="50%" r="50" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/><line x1="0" y1="50%" x2="100%" y2="50%" stroke="rgba(255,255,255,0.1)" stroke-width="2"/></svg>') no-repeat center center;
+      background-size: cover;
+      opacity: 0.3;
+      z-index: -1;
+    }
+  </style>
 </head>
 <body>
   <!-- Particle Background -->
@@ -36,10 +80,21 @@
   <div id="root"></div>
 
   <script type="text/babel">
-    const { useEffect, useRef } = React;
+    const { useEffect, useRef, useState } = React;
 
     // Navbar Component
     const Navbar = () => {
+      const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+
+      useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+      }, [theme]);
+
+      const toggleTheme = () => {
+        setTheme(theme === 'dark' ? 'light' : 'dark');
+      };
+
       const handleSmoothScroll = (e, sectionId) => {
         e.preventDefault();
         const section = document.querySelector(sectionId);
@@ -47,22 +102,35 @@
       };
 
       return (
-        <header className="fixed top-0 w-full bg-[#1D428A]/90 shadow-lg z-50 px-4 py-4 md:px-12 flex justify-between items-center">
-          <a href="#" className="text-2xl font-bold text-[#FFC107] font-['Orbitron'] hover:text-[#FFD700]">
+        <header className="fixed top-0 w-full bg-[var(--bg-primary)]/90 shadow-lg z-50 px-4 py-4 md:px-12 flex justify-between items-center">
+          <a href="#" className="text-2xl font-bold text-[var(--accent)] font-['Orbitron'] hover:text-[#FFD700]">
             Timothy
           </a>
-          <nav className="flex space-x-4 md:space-x-6">
-            {['Home', 'Services', 'Skills', 'Education', 'Hobby', 'Projects', 'Contact'].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                onClick={(e) => handleSmoothScroll(e, `#${item.toLowerCase()}`)}
-                className="text-white hover:text-[#FFC107] transition-all duration-300 text-sm md:text-base"
-              >
-                {item}
-              </a>
-            ))}
-          </nav>
+          <div className="flex items-center space-x-4 md:space-x-6">
+            <nav className="flex space-x-4 md:space-x-6">
+              {['Home', 'Services', 'Skills', 'Education', 'Hobby', 'Projects', 'Contact'].map((item) => (
+                <a
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  onClick={(e) => handleSmoothScroll(e, `#${item.toLowerCase()}`)}
+                  className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300 text-sm md:text-base"
+                >
+                  {item}
+                </a>
+              ))}
+            </nav>
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full bg-[var(--card-bg)] text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? (
+                <i className="fa-solid fa-sun"></i>
+              ) : (
+                <i className="fa-solid fa-moon"></i>
+              )}
+            </button>
+          </div>
         </header>
       );
     };
@@ -80,26 +148,26 @@
       }, []);
 
       return (
-        <section id="home" ref={homeRef} className="min-h-screen flex flex-col justify-center items-center text-center px-4 md:px-12 bg-[#1D428A]/50">
+        <section id="home" ref={homeRef} className="min-h-screen flex flex-col justify-center items-center text-center px-4 md:px-12 bg-[var(--bg-primary)]/50">
           <div className="mb-6">
             <img
               src="/midterm/image/img.jfif"
               alt="Timothy's Profile Picture"
-              className="w-40 md:w-52 h-60 md:h-80 object-cover rounded-[50%/30%] border-4 border-[#FFC107] shadow-lg"
+              className="w-40 md:w-52 h-60 md:h-80 object-cover rounded-[50%/30%] border-4 border-[var(--accent)] shadow-lg"
             />
           </div>
-          <h1 className="text-4xl md:text-6xl font-['Orbitron'] text-white mb-4">Timothy</h1>
-          <h3 className="text-xl md:text-2xl text-[#FFC107] mb-6">IT Student</h3>
+          <h1 className="text-4xl md:text-6xl font-['Orbitron'] text-[var(--text-primary)] mb-4">Timothy</h1>
+          <h3 className="text-xl md:text-2xl text-[var(--accent)] mb-6">IT Student</h3>
           <div className="flex flex-col md:flex-row gap-4">
             <a
               href="#projects"
-              className="px-6 py-2 bg-[#1D428A] text-white rounded-lg hover:bg-[#FFC107] hover:text-[#1D428A] transition-all duration-300 shadow-md"
+              className="px-6 py-2 bg-[var(--bg-primary)] text-[var(--text-primary)] rounded-lg hover:bg-[var(--accent)] hover:text-[var(--bg-primary)] transition-all duration-300 shadow-md"
             >
               View Projects
             </a>
             <a
               href="#contact"
-              className="px-6 py-2 bg-[#1D428A] text-white rounded-lg hover:bg-[#FFC107] hover:text-[#1D428A] transition-all duration-300 shadow-md"
+              className="px-6 py-2 bg-[var(--bg-primary)] text-[var(--text-primary)] rounded-lg hover:bg-[var(--accent)] hover:text-[var(--bg-primary)] transition-all duration-300 shadow-md"
             >
               Let's Collaborate
             </a>
@@ -119,20 +187,20 @@
       ];
 
       return (
-        <section id="services" className="py-16 px-4 md:px-12 text-center bg-[#0A1A3D]/90">
-          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-white mb-12">Services</h2>
+        <section id="services" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-secondary)]/90">
+          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {services.map((service, index) => (
               <div
                 key={index}
-                className="bg-white/10 p-6 rounded-lg border border-[#FFC107]/20 hover:shadow-xl transition-all duration-300"
+                className="bg-[var(--card-bg)] p-6 rounded-lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
                 data-tilt
                 data-tilt-max="15"
                 data-tilt-speed="400"
                 data-tilt-glare
               >
-                <h4 className="text-xl text-[#FFC107] mb-2">{service.title}</h4>
-                <p className="text-white text-sm">{service.description}</p>
+                <h4 className="text-xl text-[var(--accent)] mb-2">{service.title}</h4>
+                <p className="text-[var(--text-primary)] text-sm">{service.description}</p>
               </div>
             ))}
           </div>
@@ -154,20 +222,20 @@
       ];
 
       return (
-        <section id="skills" className="py-16 px-4 md:px-12 text-center bg-[#1D428A]/90">
-          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-white mb-12">Skills</h2>
+        <section id="skills" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-primary)]/90">
+          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Skills</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {skills.map((skill, index) => (
               <div
                 key={index}
-                className="bg-white/10 p-4 rounded-lg border border-[#FFC107]/20 hover:shadow-xl transition-all duration-300"
+                className="bg-[var(--card-bg)] p-4 rounded-lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
                 data-tilt
                 data-tilt-max="15"
                 data-tilt-speed="400"
                 data-tilt-glare
               >
                 <img src={skill.img} alt={skill.name} className="w-12 h-12 object-contain mx-auto mb-2" />
-                <span className="text-white text-sm">{skill.name}</span>
+                <span className="text-[var(--text-primary)] text-sm">{skill.name}</span>
               </div>
             ))}
           </div>
@@ -196,19 +264,19 @@
           logo: '/midterm/image/acs.jfif',
           degree: 'Graduated in Elementary',
           school: 'Alitagtag Central School',
-          duration: '2024',
+          duration: '2010 - 2016',
           description: 'Earned a certification in Sports.',
         },
       ];
 
       return (
-        <section id="education" className="py-16 px-4 md:px-12 text-center bg-[#0A1A3D]/90">
-          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-white mb-12">Education</h2>
+        <section id="education" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-secondary)]/90">
+          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Education</h2>
           <div className="flex flex-col gap-6 max-w-2xl mx-auto">
             {education.map((edu, index) => (
               <div
                 key={index}
-                className="bg-white/10 p-6 rounded-lg border border-[#FFC107]/20 hover:shadow-xl transition-all duration-300"
+                className="bg-[var(--card-bg)] p-6 rounded-lg=lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
                 data-tilt
                 data-tilt-max="15"
                 data-tilt-speed="400"
@@ -217,11 +285,11 @@
                 <div className="flex items-center gap-4 mb-4">
                   <img src={edu.logo} alt={`${edu.school} Logo`} className="w-10 h-10 object-contain" />
                   <div className="text-left">
-                    <h4 className="text-xl text-[#FFC107]">{edu.degree}</h4>
-                    <p className="text-white text-sm">{edu.school}, {edu.duration}</p>
+                    <h4 className="text-xl text-[var(--accent)]">{edu.degree}</h4>
+                    <p className="text-[var(--text-primary)] text-sm">{edu.school}, {edu.duration}</p>
                   </div>
                 </div>
-                <p className="text-white text-sm">{edu.description}</p>
+                <p className="text-[var(--text-primary)] text-sm">{edu.description}</p>
               </div>
             ))}
           </div>
@@ -245,21 +313,21 @@
       ];
 
       return (
-        <section id="hobby" className="py-16 px-4 md:px-12 text-center bg-[#1D428A]/90">
-          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-white mb-12">Hobby</h2>
+        <section id="hobby" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-primary)]/90">
+          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Hobby</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {hobbies.map((hobby, index) => (
               <div
                 key={index}
-                className="bg-white/10 p-6 rounded-lg border border-[#FFC107]/20 hover:shadow-xl transition-all duration-300"
+                className="bg-[var(--card-bg)] p-6 rounded-lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
                 data-tilt
                 data-tilt-max="15"
                 data-tilt-speed="400"
                 data-tilt-glare
               >
-                <h4 className="text-xl text-[#FFC107] mb-2">{hobby.title}</h4>
-                <p className="text-white text-sm mb-2">{hobby.duration}</p>
-                <p className="text-white text-sm">{hobby.description}</p>
+                <h4 className="text-xl text-[var(--accent)] mb-2">{hobby.title}</h4>
+                <p className="text-[var(--text-primary)] text-sm mb-2">{hobby.duration}</p>
+                <p className="text-[var(--text-primary)] text-sm">{hobby.description}</p>
               </div>
             ))}
           </div>
@@ -283,21 +351,21 @@
       ];
 
       return (
-        <section id="projects" className="py-16 px-4 md:px-12 text-center bg-[#0A1A3D]/90">
-          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-white mb-12">Projects</h2>
+        <section id="projects" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-secondary)]/90">
+          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {projects.map((project, index) => (
               <div
                 key={index}
-                className="bg-white/10 p-6 rounded-lg border border-[#FFC107]/20 hover:shadow-xl transition-all duration-300"
+                className="bg-[var(--card-bg)] p-6 rounded-lg border border-[var(--card-border)] hover:shadow-xl transition-all duration-300"
                 data-tilt
                 data-tilt-max="15"
                 data-tilt-speed="400"
                 data-tilt-glare
               >
-                <h4 className="text-xl text-[#FFC107] mb-2">{project.title}</h4>
-                <p className="text-white text-sm mb-2">{project.year}</p>
-                <p className="text-white text-sm">{project.description}</p>
+                <h4 className="text-xl text-[var(--accent)] mb-2">{project.title}</h4>
+                <p className="text-[var(--text-primary)] text-sm mb-2">{project.year}</p>
+                <p className="text-[var(--text-primary)] text-sm">{project.description}</p>
               </div>
             ))}
           </div>
@@ -313,48 +381,48 @@
       };
 
       return (
-        <section id="contact" className="py-16 px-4 md:px-12 text-center bg-[#1D428A]/90">
-          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-white mb-12">Contact</h2>
+        <section id="contact" className="py-16 px-4 md:px-12 text-center bg-[var(--bg-primary)]/90">
+          <h2 className="text-3xl md:text-4xl font-['Orbitron'] text-[var(--text-primary)] mb-12">Contact</h2>
           <div className="max-w-lg mx-auto">
             <div className="flex flex-col gap-4">
               <input
                 type="text"
                 placeholder="Name"
                 required
-                className="p-3 rounded-lg bg-white/10 text-white border border-[#FFC107]/20 focus:outline-none focus:border-[#FFC107]"
+                className="p-3 rounded-lg bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--card-border)] focus:outline-none focus:border-[var(--accent)]"
               />
               <input
                 type="email"
                 placeholder="Email"
                 required
-                className="p-3 rounded-lg bg-white/10 text-white border border-[#FFC107]/20 focus:outline-none focus:border-[#FFC107]"
+                className="p-3 rounded-lg bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--card-border)] focus:outline-none focus:border-[var(--accent)]"
               />
               <textarea
                 placeholder="Message"
                 required
-                className="p-3 rounded-lg bg-white/10 text-white border border-[#FFC107]/20 focus:outline-none focus:border-[#FFC107] h-32 resize-none"
+                className="p-3 rounded-lg bg-[var(--card-bg)] text-[var(--text-primary)] border border-[var(--card-border)] focus:outline-none focus:border-[var(--accent)] h-32 resize-none"
               ></textarea>
               <button
                 onClick={handleSubmit}
-                className="px-6 py-2 bg-[#1D428A] text-white rounded-lg hover:bg-[#FFC107] hover:text-[#1D428A] transition-all duration-300 shadow-md"
+                className="px-6 py-2 bg-[var(--bg-primary)] text-[var(--text-primary)] rounded-lg hover:bg-[var(--accent)] hover:text-[var(--bg-primary)] transition-all duration-300 shadow-md"
               >
                 Send Message
               </button>
             </div>
           </div>
           <div className="mt-8">
-            <h3 className="text-2xl font-['Orbitron'] text-white mb-4">Follow Me</h3>
+            <h3 className="text-2xl font-['Orbitron'] text-[var(--text-primary)] mb-4">Follow Me</h3>
             <div className="flex justify-center gap-6">
-              <a href="https://facebook.com/yourprofile" className="text-white hover:text-[#FFC107] transition-all duration-300">
+              <a href="https://facebook.com/yourprofile" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
                 <i className="fa-brands fa-facebook text-2xl"></i>
               </a>
-              <a href="https://instagram.com/yourprofile" className="text-white hover:text-[#FFC107] transition-all duration-300">
+              <a href="https://instagram.com/yourprofile" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
                 <i className="fa-brands fa-instagram text-2xl"></i>
               </a>
-              <a href="https://tiktok.com/yourprofile" className="text-white hover:text-[#FFC107] transition-all duration-300">
+              <a href="https://tiktok.com/yourprofile" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
                 <i className="fa-brands fa-tiktok text-2xl"></i>
               </a>
-              <a href="https://twitter.com/yourprofile" className="text-white hover:text-[#FFC107] transition-all duration-300">
+              <a href="https://twitter.com/yourprofile" className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-all duration-300">
                 <i className="fa-brands fa-x-twitter text-2xl"></i>
               </a>
             </div>
@@ -365,8 +433,8 @@
 
     // Footer Component
     const Footer = () => (
-      <footer className="py-6 bg-[#1D428A]/90 text-center">
-        <p className="text-white text-sm">© 2025 Gospel Timothy M. Baracael. All Rights Reserved.</p>
+      <footer className="py-6 bg-[var(--bg-primary)]/90 text-center">
+        <p className="text-[var(--text-primary)] text-sm">© 2025 Gospel Timothy M. Baracael. All Rights Reserved.</p>
       </footer>
     );
 
@@ -402,7 +470,7 @@
       }, []);
 
       return (
-        <div className="font-['Roboto'] text-white">
+        <div className="font-['Roboto'] text-[var(--text-primary)]">
           <Navbar />
           <Home />
           <Services />

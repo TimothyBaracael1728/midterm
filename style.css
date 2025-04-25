@@ -20,7 +20,7 @@
 
 /* Body with background gradient and image */
 body {
-  background: var(--body-bg), url('/midterm/image/animation4.jpg') no-repeat center center fixed;
+  background: var(--body-bg), url('/midterm/images/animation4.jpg') no-repeat center center fixed;
   background-size: cover;
   background-blend-mode: overlay;
   color: var(--text-primary);
